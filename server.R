@@ -122,9 +122,9 @@ plot.attr<-list(
 
 # divide and run plot
 screen.matrix<-matrix(data=c(
-	0, 0.75, 0, 1, # circleplot
-	0.75, 1, 0.5, 1, # histogram
-	0.75, 1, 0, 0.5), # surrogacy  
+	0, 0.7, 0, 1, # circleplot
+	0.7, 1, 0.5, 1, # histogram
+	0.7, 1, 0, 0.5), # surrogacy  
 	nrow=3, ncol=4, byrow=TRUE)
 split.screen(screen.matrix)
 
@@ -136,6 +136,7 @@ if(input$target=="allSpecies"){lines(edge.locs, lwd=2, col="black")
 }else{
 	lines(edge.locs, lwd=2, col="grey")
 	lines(segment.final, lwd=3, col="black") }
+mtext("Expected pairwise association", side=3, line=-2, cex=1, font=2)
 
 screen(2) # histogram
 par(mar=c(4, 4, 1, 1))
@@ -143,27 +144,30 @@ plot(1~1, type="n", ann=FALSE, axes=FALSE, xlim=c(-3, 0), ylim=c(0, max(density.
 	axis(1, at=log10(x.locs), labels=rep("", length(x.locs)))
 	axis(1, at=seq(-3, 0, 1), labels=c(0.001, 0.01, 0.1, 1), lwd=0)
 	axis(2, las=1); box(bty="l")
-	title(xlab="Expected R-squared", ylab="Density", line=2.5)
+	title(
+		xlab=expression(paste("Expected R", phantom()**2, sep="")),
+		ylab="Density", line=2.5)
 	for(i in 1:4){polygon(x=polygon.list[[i]]$x, y=polygon.list[[i]]$y, col=line.cols[i])}
 	lines(density.result$x, density.result$y, col= "black", lwd=2)
+mtext("Key", side=3, line=-1.5, adj=0.05, cex=1, font=2)
 
 screen(3) # surrogacy value
 par(mar=c(4, 4, 1, 1))
 plot(1~1, type="n", ann=FALSE, axes=FALSE, xlim=c(0, selector$n), ylim=c(0, selector$n))
 	axis(1); axis(2, las=1); box(bty="l")
-	title(xlab="Number of taxa", ylab="Cumulative surrogacy value", line=2.5)
+	title(xlab="Number of taxa", ylab="Cumulative value", line=2.5)
 	# draw 'null' region
 	polygon(x=c(0, selector$n, selector$n, 0), y=c(0, 0, selector$n, 0), col="grey", border=NA)
 	# draw 'added' region
 	max.x<-min(selector$n, max(surrogacy.thisrun$budget))
 	polygon(x=c(0, c(1: max.x), max.x, 0),
 		y=c(0, surrogacy.thisrun$value[c(1: max.x)], max.x, 0), col= line.cols[4])
-	# abline(a=0, b=1, col="grey40")
-	lines(x=c(0, surrogacy.thisrun$budget)[c(1: max.x)], 
-		y=c(0, surrogacy.thisrun$value)[c(1: max.x)], col= "black", lwd=2)
+	lines(x=c(0, surrogacy.thisrun$budget)[c(1:(max.x+1))], 
+		y=c(0, surrogacy.thisrun$value)[c(1:(max.x+1))], col= "black", lwd=2)
 	lines(x=rep(max.x, 2), y=c(0, max(surrogacy.thisrun$value)), lty=2)
 	points(x= max.x, y=surrogacy.thisrun$value[length(rows)], 
 		pch=19, cex=2, col= "black")
+	mtext("Surrogacy value", side=3, line=-1.5, adj=0.1, cex=1, font=2)
 
 close.screen(all=TRUE)
 
