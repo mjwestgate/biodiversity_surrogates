@@ -11,9 +11,9 @@ shinyUI(fluidPage(
                   max = 12,
                   value = 1,
 				  step=1, sep="", animate=TRUE),
-	selectInput('line.breaks', 'Line break attributes:', c('quantile', "absolute")),
-	selectInput('line.cols', 'Line colours:', c('increasing', "diverging")),
+	selectInput('line.breaks', 'Line break attributes:', c('absolute', 'quantile')),
+	selectInput('line.cols', 'Line colours:', c('Greys', 'Blues', 'Purples', 'Reds', 'Oranges')),
 	width=3
    ),
-  mainPanel(plotOutput("circleplot", height="600px"), width=8)
+  mainPanel(plotOutput("circleplot", height="600px"), width=9)
 ))

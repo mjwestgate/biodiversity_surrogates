@@ -3,7 +3,7 @@ library(readxl)
 library(RColorBrewer)
 
 # test data
-# input<-list(dataset="richness", method="method2", target="inverts", budget="10", line.breaks="absolute", line.cols="increasing")
+# input<-list(dataset="richness", method="method2", target="inverts", budget="10", line.breaks="absolute", line.cols="Purples")
 
 import.xl.sheets <- function(file, toDist=FALSE) {
 	sheets <- readxl::excel_sheets(file)
@@ -53,8 +53,9 @@ if(input$line.breaks=="quantile"){
 	line.breaks<-quantile(congruence.thisrun, breaks=c(0, 0.25, 0.5, 0.75, 1))
 }else{line.breaks<-seq(min(congruence.thisrun), max(congruence.thisrun), length.out=5)}
 
-if(input$line.cols=="increasing"){line.cols<-brewer.pal(4, "Purples")
-}else{line.cols<-brewer.pal(4, "RdBu")[4:1]}
+line.cols<-brewer.pal(4, input$line.cols)
+# if(input$line.cols=="increasing"){line.cols<-brewer.pal(4, "Purples")
+# }else{line.cols<-brewer.pal(4, "RdBu")[4:1]}
 
 # get values for a line to show which are the 'target' taxa
 selector<-target.values[[input$dataset]]
