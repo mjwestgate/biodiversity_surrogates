@@ -136,7 +136,10 @@ if(input$target=="allSpecies"){lines(edge.locs, lwd=2, col="black")
 }else{
 	lines(edge.locs, lwd=2, col="grey")
 	lines(segment.final, lwd=3, col="black") }
-mtext("Expected pairwise association", side=3, line=-2, cex=1, font=2)
+mtext("Selected biodiversity surrogates", side=3, line=-2, cex=1, font=2)
+mtext("Note: 'target' taxa shown by black edges; selected surrogates shown in black text",
+	side=1, line=-2.5, cex=1)
+mtext("Code by Martin Westgate", side=1, line=-1, cex=1, col="grey")
 
 screen(2) # histogram
 par(mar=c(4, 4, 1, 1))
